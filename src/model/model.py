@@ -198,6 +198,7 @@ class Model(object):
         self.saver_all = tf.train.Saver(tf.all_variables())
 
         ckpt = tf.train.get_checkpoint_state(model_dir)
+        print (ckpt, load_model)
         if ckpt and load_model:
             logging.info("Reading model parameters from %s" % ckpt.model_checkpoint_path)
             #self.saver.restore(self.sess, ckpt.model_checkpoint_path)

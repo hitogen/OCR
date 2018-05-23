@@ -1,0 +1,4 @@
+train
+ python src/launcher.py --data-base-dir=sample --data-path=sample/sample.txt --model-dir=Workplace/model --log-path=Workplace/model_log.txt --steps-per-checkpoint=200 --phase=train --no-load-model
+test
+python src/launcher.py --phase=test --data-path=sample/sample.txt --data-base-dir=sample --log-path=Workplace/log_test.txt --model-dir=Workplace/model --output-dir=Workplace/result
