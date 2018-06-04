@@ -55,6 +55,7 @@ class Model(object):
         if not os.path.exists(model_dir):
             os.makedirs(model_dir)
         logging.info('loading data')
+        #print (data_base_dir)
         # load data
         if phase == 'train':
             self.s_gen = DataGen(
