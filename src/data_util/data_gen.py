@@ -161,7 +161,9 @@ class DataGen(object):
         # for c in lex] + [self.EOS], dtype=np.int32)
 
         return img_bw, word
-
+    def get_char(self, id):
+        assert 3 <= id <= len(self.char2index)
+        return self.char2index[id - 3]
 
 def test_gen():
     print('testing gen_valid')
@@ -175,7 +177,6 @@ def test_gen():
         print(str(batch['bucket_id']) + ' ' + str(batch['data'].shape[2:]))
         assert batch['data'].shape[2] == img_height
     print(count)
-
 
 if __name__ == '__main__':
     test_gen()
