@@ -1,3 +1,4 @@
+from __future__ import print_function
 __author__ = 'moonkey'
 
 import os
@@ -8,8 +9,11 @@ import pickle as cPickle
 import random, math
 from data_util.bucketdata import BucketData
 import sys
-reload(sys)
-sys.setdefaultencoding("utf-8")
+if sys.version_info >= (3,0):
+    pass
+else:
+    reload(sys)
+    sys.setdefaultencoding("utf-8")
 
 
 class DataGen(object):
@@ -57,11 +61,11 @@ class DataGen(object):
         self.bucket_data = {i: BucketData()
                             for i in range(self.bucket_max_width + 1)}
         self.char2index = []
-        with open(os.path.join(self.data_root,'Vocab.txt'), "r") as ins:
+        with open(os.path.join(self.data_root,'sample.txt'), "r") as ins:
             for line in ins:
                 self.char2index.append(line.strip())
         self.char2index.append(' ')
-        print self.char2index
+        print(self.char2index)
     def clear(self):
         self.bucket_data = {i: BucketData()
                             for i in range(self.bucket_max_width + 1)}
@@ -145,15 +149,26 @@ class DataGen(object):
         # 'a':97, '0':48
         word = [self.GO]
         #print lex
-        for c in lex.decode('utf8'):
-            #assert 96 < ord(c) < 123 or 47 < ord(c) < 58
-            #print c
-            if c in self.char2index:
-                 word.append(self.char2index.index(c) + 3)
-            else:
-                print "Error: Out of vocabolary"
-                print lex.decode('utf8'), c, self.char2index
-                exit(1)
+        try:
+            for c in lex.decode('utf8'):
+                #assert 96 < ord(c) < 123 or 47 < ord(c) < 58
+                #print c
+                if c in self.char2index:
+                    word.append(self.char2index.index(c) + 3)
+                else:
+                    print("Error: Out of vocabolary")
+                    print(lex.decode('utf8'), c, self.char2index)
+                    exit(1)
+        except:
+            for c in lex:
+                    #assert 96 < ord(c) < 123 or 47 < ord(c) < 58
+                #print c
+                if c in self.char2index:
+                    word.append(self.char2index.index(c) + 3)
+                else:
+                    print("Error: Out of vocabolary")
+                    print(lex, c, self.char2index)
+                    exit(1)
         word.append(self.EOS)
         word = np.array(word, dtype=np.int32)
         # word = np.array( [self.GO] +
